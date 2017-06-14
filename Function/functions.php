@@ -9,6 +9,24 @@
 <body>
 <?php
 
+function say_hello(){
+
+	echo "Hello Wednesday ";
+}
+
+function cal(){
+	 echo 5+5;
+}
+
+function init(){
+
+say_hello() ;
+echo "<br>";
+cal() ;
+}
+
+init();
+
 ?>	
 </body>
 </html>
