@@ -1,14 +1,29 @@
 <?php 
 
+///////-*-*-*-*- CRUD Functions -*-*-*-*////////////////////////////
+
+//////////////-*-*-*-*-Created Code-*-*-*-*///////////////////////////////
 function createRows(){
 	if(isset($_POST['submit'])){
 		global $connection;
 
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+
+		///-*-*-*-* Sscurity Sql injection *-*-*-*///////////////////
+		$username = mysqli_real_escape_string($connection, $username);
+		$password = mysqli_real_escape_string($connection, $password);
+		///////////////////////////////////////////////////////
+		
+		///// *-*-*- Security Has Format -*-*-*-////////////////////////
+		$hashFormat = "$2y$10$";
+		$salt = "iusesomecrazystrings22";
+		$hashF_and_salt = $hashFormat . $salt;
+		$encript_password = crypt($password,$hashF_and_salt);
+		///////////////////////////////////////////////////////////////
 		
 		$query = "INSERT INTO users(username,password)";
-		$query .= "VALUES ('$username','$password')";
+		$query .= "VALUES ('$username','$encript_password')";
 
 		$result = mysqli_query($connection, $query);
 
@@ -19,7 +34,9 @@ function createRows(){
 		}
 	}
 }
+///////////////////////////////////////////////////////////////////////////
 
+////////////*-*-*-* Read All Data Code *-*-*-*////////////////////////////
 function showAllRead(){
 	global $connection;
 	$query = "SELECT * FROM users ";	
@@ -34,7 +51,9 @@ function showAllRead(){
 		echo "</pre>";		
 	}
 }
+////////////////////////////////////////////////////////////////
 
+//////////*--*-*- Read ID Code -*-*-*-*////////////////////////
 function showAllData(){
 	global $connection;
 	$query = "SELECT * FROM users ";	
@@ -48,7 +67,9 @@ function showAllData(){
 		echo "<option value='$id'> $id </option>";
 	}
 }
+//////////////////////////////////////////////////////////////////
 
+/////////////*-*-*-* Update Data Code *-*-*-*-**-*-/////////////////
 function UpdateTable(){
 	if(isset($_POST['submit'])){
 		global $connection;
@@ -56,10 +77,19 @@ function UpdateTable(){
 		$password = $_POST['password'];
 		$id = $_POST['id'];
 
+		///// *-*-*- Security Has Format -*-*-*-////////////////////////
+		$hashFormat = "$2y$10$";
+		$salt = "iusesomecrazystrings22";
+		$hashF_and_salt = $hashFormat . $salt;
+		$encript_password = crypt($password,$hashF_and_salt);
+		///////////////////////////////////////////////////////////////
+
 		$query = "UPDATE users SET ";
 		$query .= "username = '$username', ";
-		$query .= "password = '$password' ";
+		$query .= "password = '$encript_password' ";
 		$query .= "WHERE id = $id ";
+
+
 
 		$result = mysqli_query($connection, $query);
 		if(!$result){
@@ -69,7 +99,9 @@ function UpdateTable(){
 		}
 	}
 }
+////////////////////////////////////////////////////////////////
 
+///////*-*-*-*-* Deleted Data Code -*-*-*-* ///////////////////
 function deleteRows(){
 	if(isset($_POST['submit'])){
 		global $connection;
@@ -88,3 +120,4 @@ function deleteRows(){
 		}
 	}
 }
+//////////////////////////////////////////////////////////////////////
