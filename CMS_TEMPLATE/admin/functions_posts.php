@@ -5,18 +5,18 @@ function insert_post(){
 
 	if(isset($_POST['create_post'])){
 
-		$post_title = $_POST['post_title'];
-		$post_author = $_POST['post_author'];
-		$post_category_id = $_POST['post_category'];
-		$post_status = $_POST['post_status'];
+		$post_title = mysqli_real_escape_string($connection,$_POST['post_title']);
+		$post_author =  mysqli_real_escape_string($connection,$_POST['post_author']);
+		$post_category_id =  mysqli_real_escape_string($connection,$_POST['post_category']);
+		$post_status =  mysqli_real_escape_string($connection,$_POST['post_status']);
 
-		$post_image = $_FILES['post_image']['name'];
-		$post_image_temp = $_FILES['post_image']['tmp_name'];
+		$post_image =  mysqli_real_escape_string($connection,$_FILES['post_image']['name']);
+		$post_image_temp =  mysqli_real_escape_string($connection,$_FILES['post_image']['tmp_name']);
 
-		$post_tags = $_POST['post_tags'];
-		$post_content = $_POST['post_content'];
+		$post_tags = mysqli_real_escape_string($connection,$_POST['post_tags']);
+		$post_content =  mysqli_real_escape_string($connection,$_POST['post_content']);
 		$post_date = date('d-m-y');
-		$post_comment_count = 4;
+		$post_comment_count = 0;
 
 		move_uploaded_file($post_image_temp, "../images/$post_image");
 		
@@ -69,14 +69,14 @@ function ViewAllPosts(){
 
 
 
-           
+    
             echo "<td>$post_status</td>";
-            echo "<td><img width='100' src='../images/$post_image'></td>";
+            echo '<td><img width="100" src="../images/'.$post_image.'"></td>';
             echo "<td>$post_tags</td>";
             echo "<td>$post_comment_count</td>";
             echo "<td>$post_date</td>";
-            echo "<td><a href='./posts.php?delete={$post_id}'>Delete</a></td>";
             echo "<td><a href='./posts.php?source=edit_post&edit={$post_id}'>Edit</a></td>";
+            echo "<td><a href='./posts.php?delete={$post_id}'>Delete</a></td>";         
             echo "</tr>";
         }
 
@@ -95,6 +95,8 @@ function deletePost(){
 
 	}
 }
+
+
 
 
 

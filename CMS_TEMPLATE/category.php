@@ -22,14 +22,28 @@
 
                 $query = "SELECT * FROM posts WHERE post_category_id = $the_catgory_id ";
                 $select_all_posts_query = mysqli_query($connection,$query);
-
+                $num_row = 0;
+                $published_key = 0;
                 while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                    $num_row++; 
                     $post_id = $row['post_id'];
                     $post_title = $row['post_title'];
                     $post_author= $row['post_author'];
                     $post_date = $row['post_date'];
+                    $post_status = $row['post_status'];
                     $post_image = $row['post_image'];
                     $post_content = substr($row['post_content'], 0,100);
+
+                    if($num_row !== 0 && $post_status != 'published'){
+                      if($published_key == 0){
+                        $published_key = 1;
+                        echo "<h1>Sorry, No Post</h1>";
+                      } else{
+                        continue;
+                      }
+                    }
+                    else{
+                    
             
             ?>
         
@@ -49,7 +63,14 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-                <?php } ?>
+                <?php 
+                    } 
+
+                }
+                if($num_row == 0){
+                    echo "<h1>Sorry, No Post</h1>";
+                }
+                ?>
 
 
                 

@@ -1,6 +1,9 @@
-<?php include "../includes/db.php" ?>
-<?php include "functions_categories.php" ?>
-<?php include "functions_posts.php" ?>
+<?php include "../includes/db.php"; ?>
+<?php include "functions_categories.php"; ?>
+<?php include "functions_posts.php"; ?>
+<?php include "functions_comments.php"; ?>
+<?php include "functions_users.php"; ?>
+
 <?php ob_start(); ?>
 <?php session_start(); ?>
 
