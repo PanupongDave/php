@@ -66,6 +66,29 @@
 		<input type="text" name="post_title" class="form-control" value="<?php if(isset($post_title)){echo $post_title;} ?>">
 	</div>
 
+	
+<div class="form-group">
+		<select name="user_role" id="">
+		<?php 
+			$query = "SELECT * FROM users ";
+			$select_users = mysqli_query($connection,$query);
+			if(!$select_users){
+				die('QUERY FAILED'. mysql_error($connection));
+			}
+
+			while($row = mysqli_fetch_assoc($select_users)){
+				$user_id = $row['user_id'];
+				$user_role = $row['user_role'];
+
+				echo "<option value='$user_id'>{$user_role}</option>";
+			}
+
+		?>
+			
+		</select>
+</div>
+
+
 	<div class="form-group">
 		<select name="post_category" id="">
 		<?php 

@@ -16,5 +16,5 @@
     </tbody>
 </table>
 
-<?php //deleteComments(); ?>
-<?php //Approve(); ?>
+<?php deleteUser(); ?>
+<?php ChangeRole(); ?>
