@@ -25,6 +25,7 @@ function ViewAllUsers(){
 		echo "<td>$user_role</td>";
 		echo "<td><a href='users.php?change_admin=$user_id'>Admin</a></td>";
 		echo "<td><a href='users.php?change_subscriber=$user_id'>Subscriber</a></td>";
+		echo "<td><a href='users.php?source=edit_user&edit=$user_id'>Edit</a></td>";
 		echo "<td><a href='users.php?delete=$user_id'>Delete</a></td>";
 
 		echo "</tr>";
@@ -104,6 +105,43 @@ function ChangeRole(){
 			echo "Error: " . $query . "<br>" . $connection->error;
 		}
 		header("location: users.php");
+	}
+}
+
+function updateUser(){
+	global $connection;
+
+	if(isset($_POST['update_user'])){
+
+			$the_user_id = mysqli_real_escape_string($connection,$_POST['user_id']);
+			$username = mysqli_real_escape_string($connection,$_POST['username']);
+			$user_password = mysqli_real_escape_string($connection,$_POST['user_password']);
+			$user_firstname = mysqli_real_escape_string($connection,$_POST['user_firstname']);
+			$user_lastname = mysqli_real_escape_string($connection,$_POST['user_lastname']);
+			$user_email = mysqli_real_escape_string($connection,$_POST['user_email']);
+			$user_role = mysqli_real_escape_string($connection,$_POST['user_role']);
+
+
+			$query = "UPDATE users SET ";
+			$query .= "username = '{$username}', ";
+			$query .= "user_password = '{$user_password}', ";
+			$query .= "user_firstname = '{$user_firstname}', ";
+			$query .= "user_lastname = '{$user_lastname}', ";
+			$query .= "user_email = '{$user_email}', ";
+			$query .= "user_role = '{$user_role}' ";
+			$query .= "WHERE user_id = {$the_user_id} ";
+
+			$update_user = mysqli_query($connection,$query);
+
+			if(!$update_user){
+            echo "Error: " . $query . "<br>" . $connection->error;
+        	} else {
+        		echo "<div class='alert alert-success'>
+  				<strong>Success!</strong> Updated User.
+				</div>";	
+        	}   
+
+		
 	}
 }
 

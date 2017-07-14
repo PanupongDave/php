@@ -16,7 +16,7 @@
 	<div class="form-group">
 		<label for="user_role">Role:</label>
 		<select name="user_role" id="">
-			<option value="subscriber">Select option</option>
+			<option value="subscriber">Select Options</option>
 			<option value="admin">Admin</option>
 			<option value="subscriber">Subscriber</option>
 		</select>

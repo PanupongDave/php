@@ -17,7 +17,38 @@
                     </form>
                     <!-- /.input-group -->
                 </div>
+                <!-- Welcome User -->
+                <?php 
+                if($_SESSION['user_firstname'] != null){
+                    echo "<div class='well'>";
+                    echo "<h4>Welcome: ".$_SESSION['user_firstname']." ".$_SESSION['user_lastname']."</h4>";
+                    echo "</div>";
+                }else{
 
+                ?>
+                <!-- Login -->
+                 <div class="well">
+                    <h4>Login</h4>
+                    <form action="includes/login.php" method="post">
+                        <div class="input-group">
+                            <label for="username">Username:</label>
+                            <input name="username" type="text" class="form-control" placeholder="Enter Username">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="password">Password:</label>
+                            <input name="password" type="password" class="form-control" placeholder="Enter Password">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" name="login" value="Login" style="margin-top: 10px">
+                        </div>
+
+                    </form>
+                    <!-- Lgoin Form-->
+
+                </div>
+                <?php } ?>
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Categories</h4>
@@ -34,7 +65,7 @@
                                     echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                                     echo "</ul>";
                                 }
-                ?>
+                      ?>
                         </div>
                         <!-- /.col-lg-6 -->
                  

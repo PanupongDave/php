@@ -9,11 +9,15 @@
 
 <?php
 
-if(isset($_SESSION['user_role'])){
+if(!isset($_SESSION['user_role'])){
 
-} else{
-    // header("location: ../index.php");
-}
+        header("location: ../index.php");
+} 
+
+if($_SESSION['user_role'] !== 'admin'){
+        header("location: ../index.php");
+    }
+
 
 ?>
 

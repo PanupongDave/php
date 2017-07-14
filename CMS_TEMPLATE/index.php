@@ -1,4 +1,4 @@
-<?php include "includes/db.php";?>
+
 <?php include "includes/header.php";?>
 
  <!-- Navigation -->   
@@ -18,9 +18,11 @@
             <?php 
                 $query = "SELECT * FROM posts ";
                 $select_all_posts_query = mysqli_query($connection,$query);
-                $published_key = 0;
+                $num_draft = 0;
+                $num_published = 0;
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                       
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
                         $post_author= $row['post_author'];
@@ -29,17 +31,13 @@
                         $post_image = $row['post_image'];
                         $post_content = substr($row['post_content'], 0,100);
 
+                       
 
-                        if( $post_status !== 'published'){
-                            if($published_key == 0 ){
-                                $published_key= 1;
-                                echo "<h1>Sorry,This is No Post </h1>";
-                            }else{
+                        if($post_status == 'draft'){
+                                $num_draft++;  
                                 continue;
-                            }
-                            
-                        }else{
-                            $published_key = 1;
+                        }else{ 
+                           $num_published++;
 
 
             ?>
@@ -62,8 +60,17 @@
 
                     <hr>
                 <?php 
+
                         } 
-                    } 
+                    
+                    }
+                      if($num_draft == 0 && $num_published == 0 ){
+                                echo "<h1>This is No Post.</h1>";
+                        }
+                    if($num_draft != 0 && $num_published == 0 ){
+                                echo "<h1>This is No Post.</h1>";
+                    }
+
                 ?>
 
 
