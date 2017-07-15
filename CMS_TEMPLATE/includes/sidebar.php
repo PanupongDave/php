@@ -19,10 +19,12 @@
                 </div>
                 <!-- Welcome User -->
                 <?php 
-                if($_SESSION['user_firstname'] != null){
-                    echo "<div class='well'>";
-                    echo "<h4>Welcome: ".$_SESSION['user_firstname']." ".$_SESSION['user_lastname']."</h4>";
-                    echo "</div>";
+                if(isset($_SESSION['user_firstname'])){
+                    if($_SESSION['user_firstname'] != null){
+                        echo "<div class='well'>";
+                        echo "<h4>Welcome: ".$_SESSION['user_firstname']." ".$_SESSION['user_lastname']."</h4>";
+                        echo "</div>";
+                        }
                 }else{
 
                 ?>

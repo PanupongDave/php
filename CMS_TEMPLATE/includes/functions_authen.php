@@ -28,7 +28,7 @@ function loginUser(){
 		if(isset($username_query)){
 			if($password == $password_query ){
 			
-					$_SESSION['usernmae']  = $username_query;
+					$_SESSION['username']  = $username_query;
 					$_SESSION['user_firstname']  = $user_firstname;
 					$_SESSION['user_lastname']  = $user_lastname;
 					$_SESSION['user_email']  = $user_email;

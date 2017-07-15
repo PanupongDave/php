@@ -3,6 +3,7 @@
 <?php include "functions_posts.php"; ?>
 <?php include "functions_comments.php"; ?>
 <?php include "functions_users.php"; ?>
+<?php include "functions_dashboard.php"; ?>
 
 <?php ob_start(); ?>
 <?php session_start(); ?>
@@ -50,6 +51,7 @@ if($_SESSION['user_role'] !== 'admin'){
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
