@@ -43,8 +43,10 @@ function createUser(){
 		$user_email = mysqli_real_escape_string($connection,$_POST['user_email']);
 		$user_role = mysqli_real_escape_string($connection,$_POST['user_role']);
 
+		$password = hashPassword($user_password);
+
 		$query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_role) ";
-		$query .= "VALUES('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}') ";
+		$query .= "VALUES('{$username}', '{$password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}') ";
 
 		$create_user = mysqli_query($connection, $query);
 
@@ -121,10 +123,11 @@ function updateUser(){
 			$user_email = mysqli_real_escape_string($connection,$_POST['user_email']);
 			$user_role = mysqli_real_escape_string($connection,$_POST['user_role']);
 
+			$password = hashPassword($user_password);
 
 			$query = "UPDATE users SET ";
 			$query .= "username = '{$username}', ";
-			$query .= "user_password = '{$user_password}', ";
+			$query .= "user_password = '{$password}', ";
 			$query .= "user_firstname = '{$user_firstname}', ";
 			$query .= "user_lastname = '{$user_lastname}', ";
 			$query .= "user_email = '{$user_email}', ";
@@ -145,5 +148,49 @@ function updateUser(){
 	}
 }
 
+function registerUser(){
+	global $connection;
+
+	if(isset($_POST['submit'])){
+		$username = mysqli_real_escape_string($connection,$_POST['username']);
+		$user_password = mysqli_real_escape_string($connection,$_POST['user_password']);
+		$user_firstname =  mysqli_real_escape_string($connection,$_POST['user_firstname']);
+		$user_lastname = mysqli_real_escape_string($connection,$_POST['user_lastname']);
+		$user_email = mysqli_real_escape_string($connection,$_POST['user_email']); 
+	}
+
+		$password = hashPassword($user_password);
+
+		$query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_role) ";
+		$query .= "VALUES('{$username}', '{$password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', 'admin') ";;
+
+		$create_user = mysqli_query($connection, $query);
+
+		if(!$create_user){
+                // die('QUERY FAILED'. mysql_error($connection));
+                echo "Error: " . $query . "<br>" . $connection->error;
+         }else{
+         		echo "<div class='alert alert-success'>
+  				<strong>Success!</strong> Created User.
+				</div>";
+         }
+}
+
+function hashPassword($user_password){
+	global $connection;
+	$query = "SELECT randSalt FROM users WHERE username = 'admin'";
+	$select_randsalt_query = mysqli_query($connection, $query);
+
+	if(!$select_randsalt_query){
+		die("Query Failed" . mysqli_error($connection));
+	}
+
+	while($row = mysqli_fetch_array($select_randsalt_query)){
+		$salt = $row['randSalt'];
+	}
+
+	$password = crypt($user_password, $salt);
+	return $password;
+}
 
 ?>

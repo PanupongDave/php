@@ -10,6 +10,19 @@ function loginUser(){
 		$username = mysqli_real_escape_string($connection, $_POST['username']);
 		$password = mysqli_real_escape_string($connection, $_POST['password']);
 
+		$query = "SELECT randSalt FROM users WHERE username = 'admin'";
+		$select_randsalt_query = mysqli_query($connection, $query);
+
+		if(!$select_randsalt_query){
+			die("Query Failed" . mysqli_error($connection));
+		}
+
+		while($row = mysqli_fetch_array($select_randsalt_query)){
+			$salt = $row['randSalt'];
+		}
+
+		$user_password = crypt($password, $salt);
+
 		$query = "SELECT * FROM users WHERE username = '{$username}' ";
 		$select_user_query = mysqli_query($connection,$query);
 		if(!$select_user_query){
@@ -26,7 +39,7 @@ function loginUser(){
 		}
 
 		if(isset($username_query)){
-			if($password == $password_query ){
+			if($user_password == $password_query ){
 			
 					$_SESSION['username']  = $username_query;
 					$_SESSION['user_firstname']  = $user_firstname;
