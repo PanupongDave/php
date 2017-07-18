@@ -24,11 +24,14 @@ function insert_post(){
 		$query .= "VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', {$post_comment_count}, '{$post_status}') ";
 	
 		 $create_post = mysqli_query($connection, $query);
+         confirmQuery($create_post);
+         $the_post_id = mysqli_insert_id($connection);
 
-            if(!$create_post){
-                // die('QUERY FAILED'. mysql_error($connection));
-                echo "Error: " . $query . "<br>" . $connection->error;
-            }
+
+        echo "<div class='alert alert-success'>
+                    <strong>Success!</strong> Post Created.<a href='../post.php?p_id={$the_post_id}'>ViewPost.</a>
+                </div>"; 
+          
 	}
 
 
@@ -53,9 +56,10 @@ function ViewAllPosts(){
             $post_date = $row['post_date'];
 
             echo "<tr>";
+            echo "<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='$post_id'></td>";
             echo "<td>$post_id</td>";
             echo "<td>$post_author</td>";
-            echo "<td>$post_title</td>";
+            echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
 
             	$query = "SELECT * FROM categories WHERE cat_id = {$post_category_id}";
             	$select_categories_id = mysqli_query($connection,$query);
@@ -129,13 +133,47 @@ function updatePost(){
 
         $update_post = mysqli_query($connection,$query);
 
-        if(!$update_post){
-            echo "Error: " . $query . "<br>" . $connection->error;
-        }       
+       confirmQuery($update_post);
+
+        echo "<div class='alert alert-success'>
+                    <strong>Success!</strong> Updated_post.
+                </div>";     
     }
 }
 
+function ReciveData($checkBoxArray){
+    global $connection;
+    foreach($checkBoxArray as $checkBoxValue){
+        $bulk_options = $_POST['bulk_options'];
 
+        switch ($bulk_options) {
+            case 'published':
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$checkBoxValue}";
+                $update_to_publushed_status = mysqli_query($connection,$query);
+                confirmQuery($update_to_publushed_status);
+                break;
+            case 'draft':
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$checkBoxValue}";
+                $update_to_draft_status = mysqli_query($connection,$query);
+                confirmQuery($update_to_draft_status);
+                break;
+            
+            case 'delete':
+                $query = "DELETE FROM posts WHERE post_id = {$checkBoxValue} ";
+                $update_to_delete_status = mysqli_query($connection,$query);
+                confirmQuery($update_to_delete_status);
+                break;
+        }
+    }
+}
+
+function confirmQuery($result){
+    global $connection;
+    if(!$result){
+        die('QUERY FAILED'. mysql_error($connection));
+        //echo "Error: " . $query . "<br>" . $connection->error;    
+    }
+}
 
 
 

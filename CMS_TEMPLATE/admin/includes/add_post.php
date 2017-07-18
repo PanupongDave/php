@@ -36,6 +36,7 @@
 	<div class="form-group">
 		<label for="post_status">Post Status: </label>
 		<select name="post_status">
+			<option value="">Select Options</option>
 			<option value="draft">draft</option>
 			<option value="published">published</option>
 		</select>

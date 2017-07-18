@@ -58,8 +58,15 @@
 	<div class="form-group">
 		<label for="post_status">Post Status: </label>
 		<select name="post_status">
-			<option value="draft">draft</option>
-			<option value="published">published</option>
+			<option value=""><?php echo $post_status; ?></option>
+			<?php 
+			if($post_status == 'published'){
+				echo "<option value='draft'>draft</option>";
+			} else {
+				echo "<option value='published'>publish</option>";
+			}
+
+			?>
 		</select>
 	</div>
 

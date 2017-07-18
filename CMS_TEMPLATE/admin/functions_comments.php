@@ -69,16 +69,21 @@ function insertComments($the_post_id){
        $comment_author = mysqli_real_escape_string($connection,$_POST['comment_author']);
        $comment_email = mysqli_real_escape_string($connection,$_POST['comment_email']);
        $comment_content = mysqli_real_escape_string($connection,$_POST['comment_content']);
+     
 
-       $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-       $query .= "VALUES ($the_post_id ,'{$comment_author}', '{$comment_email}', '{$comment_content}', 'approved', now()) ";
+	       $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+	       $query .= "VALUES ($the_post_id ,'{$comment_author}', '{$comment_email}', '{$comment_content}', 'approved', now()) ";
 
-       $create_comment = mysqli_query($connection, $query);
+	       $create_comment = mysqli_query($connection, $query);
 
-        if(!$create_comment){
-            // die('QUERY FAILED'. mysql_error($connection));
-            echo "Error: " . $query . "<br>" . $connection->error;
-        }
+	        if(!$create_comment){
+	            // die('QUERY FAILED'. mysql_error($connection));
+	            echo "Error: " . $query . "<br>" . $connection->error;
+	        }
+	       
+        
+       
+        
        header("location: post.php?p_id=$the_post_id");
     }
 

@@ -131,6 +131,7 @@
                           ['Data', 'Count'],
                           <?php 
 
+                              $post_all_count = CountPosts();  
                               $post_count = CountPostsActive();
                               $post_draft_count = CountPostsDraft();
 
@@ -144,10 +145,10 @@
                               
                               
 
-                            $element_text = ['Active Posts', 'Draft Posts', 'Comments','Pending Comments', 'Users', 'Subscribers', 'Categories'];
-                            $element_count = [$post_count, $post_draft_count, $comment_count, $unapproved_comment_count, $user_count, $subscriber_count, $category_count];
+                            $element_text = ['All Posts','Active Posts', 'Draft Posts', 'Comments','Pending Comments', 'Users', 'Subscribers', 'Categories'];
+                            $element_count = [$post_all_count,$post_count, $post_draft_count, $comment_count, $unapproved_comment_count, $user_count, $subscriber_count, $category_count];
 
-                            for($i =0;$i < 7 ; $i++){
+                            for($i =0;$i < 8 ; $i++){
                                 echo "['{$element_text[$i]}'" . ",". "{$element_count[$i]}],";
                             }
 

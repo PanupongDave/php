@@ -46,7 +46,9 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date ?></p>
                 <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+                <a href="">
+                    <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+                </a>
                 <hr>
                 <p><?php echo $post_content ?></p>
                 
@@ -78,7 +80,19 @@
                     </form>
                 </div>
 
+                <?php 
+                    if(isset($_POST['create_comment'])){
+                        if(!empty($_POST['comment_author']) && !empty($_POST['comment_email']) && !empty($_POST['comment_content'])){
+                            insertComments($_GET['p_id']);
+                        }else {
+                            echo "<script>alert('Fields cannot be empty')</script>";
+                        }
+                    }
+                 ?>
+                 <?php commentCount($_GET['p_id']); ?>
+
                 <hr>
+
 
                 <!-- Posted Comments -->
 
@@ -113,8 +127,7 @@
 
                 <?php } ?>
                 
-                <?php insertComments($_GET['p_id']); ?>
-                <?php commentCount($_GET['p_id']); ?>
+                
 
             
 
@@ -124,7 +137,7 @@
 
             </div>
             
-
+            
            
             <!-- Blog Sidebar Widgets Column -->
             <?php include "includes/sidebar.php" ?>
